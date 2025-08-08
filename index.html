@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Special Message</title>
   <style>
     body {
@@ -32,18 +32,31 @@
       font-size: 24px;
       margin-top: 30px;
       color: #ff1a75;
-      animation: pop 0.5s ease;
+      animation: pop 0.5s ease forwards;
+      opacity: 0;
+      animation-fill-mode: forwards;
     }
     @keyframes pop {
-      0% { transform: scale(0); }
-      100% { transform: scale(1); }
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    #result img {
+      margin-top: 20px;
+      width: 250px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(255, 26, 117, 0.7);
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
 
   <h1>Enter Your Name ❤️</h1>
-  <input type="text" id="nameInput" placeholder="Your name">
+  <input type="text" id="nameInput" placeholder="Your name" />
   <button onclick="checkName()">Submit</button>
 
   <div id="result"></div>
@@ -55,9 +68,14 @@
       const resultDiv = document.getElementById("result");
 
       if (inputName === gfName.toLowerCase()) {
-        resultDiv.innerHTML = `<div class="message">I love you 💖😘💐</div>`;
+        resultDiv.innerHTML = `
+          <div class="message">I love you Zeba, Arbaj loves you 💖😘💐</div>
+          <img src="images/zeba.jpg" alt="Zeba" />
+        `;
       } else {
-        resultDiv.innerHTML = `<div class="message">Hmm... that's not the name I'm looking for 😉</div>`;
+        resultDiv.innerHTML = `
+          <div class="message">Hmm... that's not the name I'm looking for 😉</div>
+        `;
       }
     }
   </script>
