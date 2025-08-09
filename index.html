@@ -8,13 +8,33 @@
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      margin-top: 100px;
+      margin: 0;
       background-color: #ffe6f0;
+      overflow: hidden;
     }
+
+    /* Floating emoji background */
+    .emoji {
+      position: absolute;
+      font-size: 30px;
+      animation: floatUp 10s linear infinite;
+      opacity: 0.7;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(100vh) rotate(0deg); }
+      to { transform: translateY(-10vh) rotate(360deg); }
+    }
+
+    h1 {
+      margin-top: 80px;
+      color: #ff1a75;
+    }
+
     input {
       padding: 10px;
       font-size: 16px;
     }
+
     button {
       padding: 10px 20px;
       font-size: 16px;
@@ -28,18 +48,19 @@
     button:hover {
       background-color: #e6005c;
     }
+
     .message {
       font-size: 24px;
       margin-top: 30px;
       color: #ff1a75;
       animation: pop 0.5s ease forwards;
       opacity: 0;
-      animation-fill-mode: forwards;
     }
     @keyframes pop {
       0% { transform: scale(0.5); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
+
     #result img {
       margin-top: 20px;
       width: 250px;
@@ -55,27 +76,47 @@
 </head>
 <body>
 
+  <!-- Floating emoji background -->
+  <script>
+    const emojis = ["🌸", "💖", "🌹", "💐", "💕", "💘", "🌺", "🌷"];
+    for (let i = 0; i < 30; i++) {
+      const span = document.createElement("span");
+      span.classList.add("emoji");
+      span.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      span.style.left = Math.random() * 100 + "vw";
+      span.style.animationDuration = 5 + Math.random() * 10 + "s";
+      document.body.appendChild(span);
+    }
+  </script>
+
   <h1>Enter Your Name ❤️</h1>
   <input type="text" id="nameInput" placeholder="Your name" />
   <button onclick="checkName()">Submit</button>
 
   <div id="result"></div>
 
+  <!-- Hidden audio -->
+  <audio id="bgMusic" src="song.mp3"></audio>
+
   <script>
     function checkName() {
       const gfName = "zeba";
       const inputName = document.getElementById("nameInput").value.trim().toLowerCase();
       const resultDiv = document.getElementById("result");
+      const music = document.getElementById("bgMusic");
 
       if (inputName === gfName.toLowerCase()) {
+        music.play();
         resultDiv.innerHTML = `
-          <div class="message">I love you Zeba, Arbaj loves you 💖😘💐</div>
+          <div class="message">I love you Zeba, Arbaj loves you 💖😘💐🌹💕💘</div>
           <img src="images/zeba.jpg" alt="Zeba" />
         `;
       } else {
         resultDiv.innerHTML = `
           <div class="message">Hmm... that's not the name I'm looking for 😉</div>
         `;
+        music.pause();
+        music.currentTime = 0;
       }
     }
   </script>
